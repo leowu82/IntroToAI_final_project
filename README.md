@@ -2,7 +2,7 @@
 Recommend bgm by Facial feature
 
 # Dependencies
-*Python 3.10
+* Python 3.10
 
 # Installation
 To install the required packages, run the following command:
