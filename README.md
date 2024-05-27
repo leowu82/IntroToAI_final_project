@@ -1,8 +1,8 @@
 # 目前進度
-## Face classification
-* trainning 需要很多時間 2.5hr per epoch with 32 batch size(CPU: intel I7 11370H)
+### Face classification
+* trainning 需要很多時間 2.5hr per epoch with 32 batch size and 154525 faces (CPU: intel I7 11370H)
 * test 還沒測試
-## Music recommendation
+### Music recommendation
 * None
 
 # Dependencies
