@@ -35,6 +35,15 @@ To train the face classification model, run the following command:
 ```python
 python train.py
 ```
-If you want to get trained model, you can download from [here](https://drive.google.com/drive/folders/146qbJXDoewV6p73qA4vFUPLgEmL7svVi?usp=drive_link)
+You can download the trained model from [here](https://drive.google.com/drive/folders/146qbJXDoewV6p73qA4vFUPLgEmL7svVi?usp=drive_link) if you want it.
+
+## 4. Test the model
+To test the model, put the photo in the "input" folder and run following command:
+```python
+python image_process.py
+```
+```python
+python test.py
+```
 
 
