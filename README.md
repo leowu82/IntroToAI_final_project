@@ -1,7 +1,7 @@
 # 目前進度
 ### Face classification
-* trainning 需要很多時間 2.5hr per epoch with 32 batch size and 154525 faces (CPU: intel I7 11370H)
-* test 還沒測試
+* train.py 有更新，目前已經train好了(20000 photos, batch size = 64, epochs = 3)，下面可以下載
+* test.py 已測試完成
 ### Music recommendation
 * None
 
@@ -35,5 +35,6 @@ To train the face classification model, run the following command:
 ```python
 python train.py
 ```
+If you want to get trained model, you can download from [here](https://drive.google.com/drive/folders/146qbJXDoewV6p73qA4vFUPLgEmL7svVi?usp=drive_link)
 
 
