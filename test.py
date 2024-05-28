@@ -19,9 +19,9 @@ def classify_photo(image_path):
     prediction = model.predict(img)
     # Assuming binary classification (e.g., gender), use threshold to determine label
     if prediction >= 0.5:
-        label = "Male"
-    else:
         label = "Female"
+    else:
+        label = "Male"
     return label
 
 # Function to classify all photos in a folder
@@ -43,5 +43,5 @@ def classify_photos_in_folder(folder_path):
             print(f"File: {file}, Predicted label: {predicted_label}")
 
 # Example usage
-input_folder_path = 'input'
+input_folder_path = 'resized_images'
 classify_photos_in_folder(input_folder_path)
