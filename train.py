@@ -14,7 +14,7 @@ male_filenames_txt = 'data/train/male.txt'
 female_filenames_txt = 'data/train/female.txt'
 
 # Image dimensions
-img_width, img_height = 224, 224
+img_width, img_height = 178, 218
 input_shape = (img_width, img_height, 3)
 
 # Number of epochs
