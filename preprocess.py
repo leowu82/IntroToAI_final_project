@@ -8,22 +8,23 @@ attr_file = 'data/list_attr_celeba.txt'
 train_dir = 'data/train'
 val_dir = 'data/validation'
 
-# Load the attributes file
-attributes = pd.read_csv(attr_file, delim_whitespace=True, header=1)
+# Num of photos
+num_photos = 20000
 
-# Create labels for gender and age (young)
+# Load the attributes file
+attributes = pd.read_csv(attr_file, sep='\s+', header=1)
+
+# Constrain the dataset to the num_photos
+attributes = attributes.iloc[:num_photos]
+
+# Create labels
 attributes['gender'] = attributes['Male'].apply(lambda x: 'male' if x == 1 else 'female')
 
 # Split the dataset into training and validation sets
 train_df, val_df = train_test_split(attributes, test_size=0.2, random_state=42)
 
-def create_directory_structure(base_dir, categories):
-    for category in categories:
-        os.makedirs(os.path.join(base_dir, category), exist_ok=True)
-
-# Create directory structures
-create_directory_structure(train_dir, ['male', 'female'])
-create_directory_structure(val_dir, ['male', 'female'])
+def create_directory_structure(base_dir):
+    os.makedirs(base_dir, exist_ok=True)
 
 # Function to write filenames to a text file for each gender
 def write_filenames_to_txt(df, dest_dir):
@@ -38,6 +39,12 @@ def write_filenames_to_txt(df, dest_dir):
         for filename in female_filenames:
             female_file.write(filename + '\n')
 
+# Create directory structures
+create_directory_structure(train_dir)
+create_directory_structure(val_dir)
+
 # Write filenames to text files for training and validation sets
 write_filenames_to_txt(train_df, train_dir)
 write_filenames_to_txt(val_df, val_dir)
+
+print("Training and validation text files have been created.")
