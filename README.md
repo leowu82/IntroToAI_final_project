@@ -17,18 +17,23 @@ This command will install the necessary Python packages specified in the require
 
 # Usage
 ## 1. Download the Dataset
-Download the CelebA dataset from [here](https://mmlab.ie.cuhk.edu.hk/projects/CelebA.html "link") and extract it to the desired location.
+Download the CelebA dataset from [here](https://mmlab.ie.cuhk.edu.hk/projects/CelebA.html "link").
 
 Unzip the "img_align_celeba.zip" file and move the extracted contents to the "data/img_align_celeba" directory.
+
+Download and move the "list_attr_celeba.txt" file into the "data" folder.
 
 ## 2. Preprocess the Dataset
 To preprocess the dataset, run the following command:
 ```python
 python preprocess.py
 ```
+You can limit the number of photos by adjusting the "num_photos" parameter.
+
 ## 3. Train the Model
 To train the face classification model, run the following command:
 ```python
 python train.py
 ```
+
 
