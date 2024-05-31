@@ -15,13 +15,10 @@ pip install -r requirements.txt
 ```
 This command will install the necessary Python packages specified in the requirements.txt file.
 
-# Usage
+# Training
 ## 1. Download the Dataset
-Download the CelebA dataset from [here](https://mmlab.ie.cuhk.edu.hk/projects/CelebA.html "link").
-
-Unzip the "img_align_celeba.zip" file and move the extracted contents to the "data/img_align_celeba" directory.
-
-Download and move the "list_attr_celeba.txt" file into the "data" folder.
+Dowmload the UTKFace dataset from [here](https://www.kaggle.com/datasets/jangedoo/utkface-new "link").
+Move the "UTKFace" folder to the "data" directory.
 
 ## 2. Preprocess the Dataset
 To preprocess the dataset, run the following command:
@@ -37,7 +34,7 @@ python train.py
 ```
 You can download the trained model from [here](https://drive.google.com/drive/folders/146qbJXDoewV6p73qA4vFUPLgEmL7svVi?usp=drive_link) if you want it.
 
-## 4. Test the model
+# Testing
 To test the model, put the photo in the "input" folder and run following command:
 ```python
 python image_process.py
