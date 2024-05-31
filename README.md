@@ -1,7 +1,8 @@
 # 目前進度
 ### Face classification
-* Dataset has been changed to UTKFace
-* 
+* The dataset has been updated to UTKFace.
+* Gender and age model training have been completed.
+* Issue: The model is inaccurate for Asian faces.
 ### Music recommendation
 * None
 
