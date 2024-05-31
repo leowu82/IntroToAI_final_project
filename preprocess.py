@@ -1,50 +1,82 @@
 import os
-import pandas as pd
-from sklearn.model_selection import train_test_split
+import random
+from collections import defaultdict
 
-# Paths
-data_dir = 'data/img_align_celeba'
-attr_file = 'data/list_attr_celeba.txt'
-train_dir = 'data/train'
-val_dir = 'data/validation'
+# Define the paths
+input_folder = 'data/UTKFace'
+output_folder_train = 'data/train'
+output_folder_val = 'data/validation'
 
-# Num of photos
-num_photos = 20000
+# Create the output folders if they do not exist
+os.makedirs(output_folder_train, exist_ok=True)
+os.makedirs(output_folder_val, exist_ok=True)
 
-# Load the attributes file
-attributes = pd.read_csv(attr_file, sep='\s+', header=1)
+# Dictionary to store filenames by age
+age_dict = defaultdict(list)
+male_files = []
+female_files = []
 
-# Constrain the dataset to the num_photos
-attributes = attributes.iloc[:num_photos]
+# Process each file in the input folder
+for filename in os.listdir(input_folder):
+    if filename.endswith('.jpg'):
+        # Extract the age from the filename
+        parts = filename.split('_')
+        age = parts[0]
+        gender = parts[1]
+        # Add the filename to the list of the corresponding age
+        age_dict[age].append(filename)
+        if gender == '0':  # Male
+            male_files.append(filename)
+        elif gender == '1':  # Female
+            female_files.append(filename)
 
-# Create labels
-attributes['gender'] = attributes['Male'].apply(lambda x: 'male' if x == 1 else 'female')
+# Split the data and write the filenames to the corresponding age text files
+for age, files in age_dict.items():
+    random.shuffle(files)  # Shuffle the list of files for each age to ensure random split
+    split_index = int(0.8 * len(files))  # 80% for training, 20% for validation
+    train_files = files[:split_index]
+    val_files = files[split_index:]
 
-# Split the dataset into training and validation sets
-train_df, val_df = train_test_split(attributes, test_size=0.2, random_state=42)
+    # Write training files
+    with open(os.path.join(output_folder_train, f'{age}.txt'), 'w') as f:
+        for file in train_files:
+            f.write(file + '\n')
 
-def create_directory_structure(base_dir):
-    os.makedirs(base_dir, exist_ok=True)
+    # Write validation files
+    with open(os.path.join(output_folder_val, f'{age}.txt'), 'w') as f:
+        for file in val_files:
+            f.write(file + '\n')
 
-# Function to write filenames to a text file for each gender
-def write_filenames_to_txt(df, dest_dir):
-    male_filenames = df[df['gender'] == 'male'].index.tolist()
-    female_filenames = df[df['gender'] == 'female'].index.tolist()
+# Shuffle the lists to ensure random split
+random.shuffle(male_files)
+random.shuffle(female_files)
 
-    with open(os.path.join(dest_dir, 'male.txt'), 'w') as male_file:
-        for filename in male_filenames:
-            male_file.write(filename + '\n')
+# Split the data
+split_index_male = int(0.8 * len(male_files))  # 80% for training, 20% for validation
+split_index_female = int(0.8 * len(female_files))
 
-    with open(os.path.join(dest_dir, 'female.txt'), 'w') as female_file:
-        for filename in female_filenames:
-            female_file.write(filename + '\n')
+train_male_files, val_male_files = male_files[:split_index_male], male_files[split_index_male:]
+train_female_files, val_female_files = female_files[:split_index_female], female_files[split_index_female:]
 
-# Create directory structures
-create_directory_structure(train_dir)
-create_directory_structure(val_dir)
+# Write male training files
+with open(os.path.join(output_folder_train, 'male.txt'), 'w') as f:
+    for file in train_male_files:
+        f.write(file + '\n')
 
-# Write filenames to text files for training and validation sets
-write_filenames_to_txt(train_df, train_dir)
-write_filenames_to_txt(val_df, val_dir)
+# Write female training files
+with open(os.path.join(output_folder_train, 'female.txt'), 'w') as f:
+    for file in train_female_files:
+        f.write(file + '\n')
 
-print("Training and validation text files have been created.")
+# Write male validation files
+with open(os.path.join(output_folder_val, 'male.txt'), 'w') as f:
+    for file in val_male_files:
+        f.write(file + '\n')
+
+# Write female validation files
+with open(os.path.join(output_folder_val, 'female.txt'), 'w') as f:
+    for file in val_female_files:
+        f.write(file + '\n')
+
+
+print("Train and validation text files have been generated in the 'output/train' and 'output/val' folders.")
