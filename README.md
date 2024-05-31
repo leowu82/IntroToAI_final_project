@@ -31,7 +31,8 @@ You can limit the number of photos by adjusting the "num_photos" parameter.
 ## 3. Train the Model
 To train the face classification model, run the following command:
 ```python
-python train.py
+python train_age.py
+python train_gender.py
 ```
 You can download the trained model from [here](https://drive.google.com/drive/folders/146qbJXDoewV6p73qA4vFUPLgEmL7svVi?usp=drive_link) if you want it.
 
