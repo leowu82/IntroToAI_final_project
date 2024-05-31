@@ -5,25 +5,25 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.applications import VGG16
 from tensorflow.keras.layers import Dense, Dropout, GlobalAveragePooling2D
 from tensorflow.keras.models import Model
-from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.optimizers import Adam
 
 # Paths
-train_dir = 'data/img_align_celeba'
-val_dir = 'data/img_align_celeba'
+train_dir = 'data/UTKFace'
+val_dir = 'data/UTKFace'
 train_male_filenames_txt = 'data/train/male.txt'
 train_female_filenames_txt = 'data/train/female.txt'
 val_male_filenames_txt = 'data/validation/male.txt'
 val_female_filenames_txt = 'data/validation/female.txt'
 
 # Image dimensions
-img_width, img_height = 178, 218
-input_shape = (img_width, img_height, 3)
-
+img_width, img_height = 200, 200
+input_shape = (img_width, img_height, 3) #RGB
+ 
 # Number of epochs
 epochs = 3
 
 # Batch size
-batch_size = 64
+batch_size = 32
 
 # Load filenames for male and female images for training
 with open(train_male_filenames_txt, 'r') as file:
@@ -96,7 +96,8 @@ for layer in base_model.layers:
     layer.trainable = False
 
 # Compile the model
-model.compile(optimizer=SGD(learning_rate=0.01, momentum=0.9), loss='binary_crossentropy', metrics=['accuracy'])
+# model.compile(optimizer=SGD(learning_rate=0.01, momentum=0.9), loss='binary_crossentropy', metrics=['accuracy'])
+model.compile(optimizer=Adam(learning_rate=0.005, clipvalue=1.0), loss='mean_squared_error', metrics=['mae'])
 
 # Train the model
 model.fit(train_generator,
@@ -106,4 +107,4 @@ model.fit(train_generator,
           validation_steps=validation_steps)
 
 # Save the trained model
-model.save('face_classification_model.h5')
+model.save('face_classification_gender_model.h5')
