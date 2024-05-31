@@ -1,7 +1,7 @@
 # 目前進度
 ### Face classification
-* train.py 有更新，目前已經train好了(20000 photos, batch size = 64, epochs = 3)，下面可以下載
-* test.py 已測試完成
+* Dataset has been changed to UTKFace
+* 
 ### Music recommendation
 * None
 
