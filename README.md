@@ -17,7 +17,7 @@ This command will install the necessary Python packages specified in the require
 
 # Training
 ## 1. Download the Dataset
-Dowmload the UTKFace dataset from [here](https://www.kaggle.com/datasets/jangedoo/utkface-new "link").
+Dowmload the UTKFace dataset from [here](https://www.kaggle.com/datasets/jangedoo/utkface-new).
 
 Move the "UTKFace" folder to the "data" directory.
 
@@ -40,7 +40,7 @@ To test the model, put the photo in the "input" folder and run following command
 ```python
 python face_detect.py
 ```
-The pretrained model of face detection is from [here](https://github.com/spmallick/learnopencv/tree/master/AgeGender).
+The pretrained model of face detection is from [spmallick/learnopencv](https://github.com/spmallick/learnopencv/tree/master/AgeGender).
 
 After running the code, you will get the cropped face in "crop_input".
 ```python
