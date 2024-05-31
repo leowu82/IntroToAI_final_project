@@ -38,8 +38,11 @@ You can download the trained model from [here](https://drive.google.com/drive/fo
 # Testing
 To test the model, put the photo in the "input" folder and run following command:
 ```python
-python image_process.py
+python face_detect.py
 ```
+The pretrained model of face detection is from [here](https://github.com/spmallick/learnopencv/tree/master/AgeGender).
+
+After running the code, you will get the cropped face in "crop_input".
 ```python
 python test.py
 ```
