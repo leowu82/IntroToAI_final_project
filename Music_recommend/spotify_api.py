@@ -26,25 +26,28 @@ def fetch_songs_by_year(sp, year, language, popularity_min=30, valence_min=0.3, 
             # Skip tracks that don't have audio features
             continue
 
-        # Check Language
+        # # Check Language
         # title_language = detect(track['name'])
         # artist_language = detect(track['artists'][0]['name'])
         # if title_language == language or artist_language == language: print("Valid Lang")
         # else: continue
+
+        # # Or
         # if track['language_of_performace'] is not None and track['language_of_performace'] != language: continue
         
         score = 0
-        # if audio_features['popularity'] < popularity_min: continue
-        # if audio_features['valence'] < valence_min: continue
-        if audio_features['danceability'] < danceability_min: score += 0.170203
-        if audio_features['energy'] < energy_min: score += 0.159384
-        if audio_features['speechiness'] < speechiness_min: score += 0.111102
-        if audio_features['acousticness'] < acousticness_min: score += 0.089827
-        # if audio_features['loudness'] < loudness_min: score += 1
+        # if audio_features['popularity'] > popularity_min: continue
+        # if audio_features['valence'] > valence_min: continue
+        if audio_features['danceability'] > danceability_min: score += 0.170203
+        if audio_features['energy'] > energy_min: score += 0.159384
+        if audio_features['speechiness'] > speechiness_min: score += 0.111102
+        if audio_features['acousticness'] > acousticness_min: score += 0.089827
+        # if audio_features['loudness'] > loudness_min: score += 1
 
         if score < ((0.170203+0.159384+0.111102+0.089827)/2): continue
 
         song_data.append({
+            'spotify_url': track['external_urls']['spotify'],
             'track_id': track['id'],
             'title': track['name'],
             'artist': ', '.join([artist['name'] for artist in track['artists']]),
