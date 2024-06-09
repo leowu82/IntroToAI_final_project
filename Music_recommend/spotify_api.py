@@ -71,14 +71,12 @@ def fetch_songs_by_year(sp, year, language, popularity_min=30, valence_min=0.3, 
 def fetch_desired_year_songs(year): 
     all_songs = []
 
-    print(f"Fetching songs for year {2010}")
+    print(f"Fetching songs for year {year}")
     try:
-        songs = fetch_songs_by_year(sp, 2010, ['en', 'zh'])
+        songs = fetch_songs_by_year(sp, year, ['en', 'zh'])
         all_songs.extend(songs)
     except Exception as e:
-        print(f"An error occurred for year {2010}: {e}")
-    # Add delay to avoid hitting rate limits
-    time.sleep(1)
+        print(f"An error occurred for year {year}: {e}")
 
     # Create DataFrame and save to CSV
     df_all_songs = pd.DataFrame(all_songs)
