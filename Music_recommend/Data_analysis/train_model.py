@@ -1,10 +1,8 @@
-# train classifier model to analyze feature importance of trending songs
-
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.metrics import accuracy_score, classification_report, roc_curve, auc
 from sklearn.model_selection import GridSearchCV
 
 file_path = 'spotify_dataset/songs_preprocessed.csv'
@@ -15,7 +13,7 @@ df['Like'] = None
 
 # can customize features that affect 'Like'
 for index, row in df.iterrows():
-    if row['valence'] >= 0.5 and row['loudness'] <= 0.9 and row['energy'] <= 0.9 and row['popularity'] >= 0.3:
+    if row['valence'] >= 0.3 and row['loudness'] <= 0.9 and row['popularity'] >= 0.3:
         df.at[index, 'Like'] = 1
     else:
         df.at[index, 'Like'] = 0
@@ -28,7 +26,7 @@ equal_distribute_col = 'year'
 train_data, test_data = train_test_split(df, test_size=0.1, stratify=df[equal_distribute_col], random_state=42)
 
 # drop unused columns
-train_data = train_data.drop(['artist', 'song'], axis=1)
+train_data = train_data.drop(['artist', 'song', 'valence', 'popularity', 'duration_ms'], axis=1)
 
 
 # ----------------------------------------
@@ -52,7 +50,7 @@ predictions = random_forest.predict(x_test)
 accuracy = accuracy_score(y_test, predictions)
 print("Accuracy:", accuracy)
 
-# You can also print classification report for detailed evaluation
+# Print classification report for detailed evaluation
 print("Classification Report:")
 print(classification_report(y_test, predictions))
 
@@ -98,9 +96,40 @@ print("Accuracy:", accuracy)
 print("Classification Report:")
 print(classification_report(y_test, predictions))
 
+# -----------------------------------------------
+# Identidy the important features affecting 'Like'
 feature_importances = pd.DataFrame({
     'Feature': x.columns,
     'Importance': best_rf.feature_importances_
 }).sort_values(by='Importance', ascending=False)
 
-feature_importances
+print(feature_importances)
+
+# Select top 5 important features
+top_features = feature_importances.head(5)['Feature'].values
+print("\nTop 5 Features:", top_features)
+
+# Determine optimal thresholds and direction for each top feature
+thresholds = {}
+directions = {}
+for feature in top_features:
+    fpr, tpr, thresholds_roc = roc_curve(y_test, x_test[feature])
+    youdens_j = tpr - fpr
+    optimal_idx = np.argmax(youdens_j)
+    optimal_threshold = thresholds_roc[optimal_idx]
+    thresholds[feature] = optimal_threshold
+    
+    # Determine direction: evaluate performance metrics above and below the threshold
+    above_threshold = x_test[feature] > optimal_threshold
+    below_threshold = x_test[feature] <= optimal_threshold
+    
+    true_positive_rate_above = np.sum(y_test[above_threshold] == 1) / np.sum(above_threshold)
+    true_positive_rate_below = np.sum(y_test[below_threshold] == 1) / np.sum(below_threshold)
+    
+    if true_positive_rate_above > true_positive_rate_below:
+        directions[feature] = 'greater'
+    else:
+        directions[feature] = 'less'
+
+print("Optimal Thresholds:", thresholds)
+print("Threshold Directions:", directions)
