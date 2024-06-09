@@ -97,7 +97,7 @@ for layer in base_model.layers:
 
 # Compile the model
 # model.compile(optimizer=SGD(learning_rate=0.01, momentum=0.9), loss='binary_crossentropy', metrics=['accuracy'])
-model.compile(optimizer=Adam(learning_rate=0.005, clipvalue=1.0), loss='mean_squared_error', metrics=['mae'])
+model.compile(optimizer=Adam(learning_rate=0.003, clipvalue=1.0), loss='binary_crossentropy', metrics=['accuracy'])
 
 # Train the model
 model.fit(train_generator,
