@@ -1,11 +1,3 @@
-# 目前進度
-### Face classification
-* The dataset has been updated to UTKFace.
-* Gender and age model training have been completed.
-* Issue: The model is inaccurate for Asian faces.
-### Music recommendation
-* None
-
 # Dependencies
 * Python 3.10
 
@@ -37,14 +29,18 @@ python train_gender.py
 ```
 You can download the trained model from [here](https://drive.google.com/drive/folders/146qbJXDoewV6p73qA4vFUPLgEmL7svVi?usp=drive_link) if you want it.
 
-# Testing
-To test the model, put the photo in the "input" folder and run following command:
+# Usage
+To test the model, we need to crop the face first.
+
+Put the photo in the "input" folder and run following command:
 ```python
 python face_detect.py
 ```
 The pretrained model of face detection is from [spmallick/learnopencv](https://github.com/spmallick/learnopencv/tree/master/AgeGender).
 
-After running the code, you will get the cropped face in "crop_input".
+After cropping the face, you will get the cropped face in "crop_input".
+
+Run following code, you will get predicted gender and age and the recommand music
 ```python
 python test.py
 ```
