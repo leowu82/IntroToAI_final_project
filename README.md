@@ -30,17 +30,17 @@ python train_gender.py
 You can download the trained model from [here](https://drive.google.com/drive/folders/146qbJXDoewV6p73qA4vFUPLgEmL7svVi?usp=drive_link) if you want it.
 
 # Usage
-To test the model, we need to crop the face first.
+Before testing the model, we must first crop the face.
 
-Put the photo in the "input" folder and run following command:
+1. Place the photo in the "input" folder and execute the following command:
 ```python
 python face_detect.py
 ```
 The pretrained model of face detection is from [spmallick/learnopencv](https://github.com/spmallick/learnopencv/tree/master/AgeGender).
 
-After cropping the face, you will get the cropped face in "crop_input".
+2. Once the face is cropped, you'll find it in the "crop_input" folder.
 
-Run following code, you will get predicted gender and age and the recommand music
+3. Run the following code to obtain the predicted gender and age, along with recommended music:
 ```python
 python test.py
 ```
